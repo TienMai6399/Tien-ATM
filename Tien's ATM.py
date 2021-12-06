@@ -186,6 +186,7 @@ class Deposit:
                         if (number<=0 or number>2000):
                             depositmessage="you can deposit up to $2000 and no less than $0  at a time!"
                             messagebox.showinfo("Error",depositmessage)
+                            #clear box
                             self.textlabel.delete(0,'end')
                         else:
                             #UPDATE NEW DATA TO FILE TXT
@@ -248,6 +249,7 @@ class Withdraw:
                         if (number<=0 or number>2000 or number>d):
                             depositmessage="you can deposit up to $2000 and no less than $0  at a time!"
                             messagebox.showinfo("Error",depositmessage)
+                            #clear box
                             self.textlabel.delete(0,'end')
                         else:
                             #UPDATE NEW DATA TO FILE TXT
