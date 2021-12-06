@@ -1,0 +1,3 @@
+tien, mai, tienmai, 12900
+kenzy, 123, hana, 6000
+egoist, 456, egoist, 2900
