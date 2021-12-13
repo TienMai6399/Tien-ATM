@@ -48,10 +48,10 @@ class Login:
         self.password = Entry(master,show='*')
         self.password.place(relx=0.5, rely=0.4, width=300, height=40, anchor=CENTER)
 
-        self.loginbutton= Button(master, text="Login", justify='center', command=self.verified, width=40, height=5,)
+        self.loginbutton= Button(master, text="Login", font = ("Helvetica", 30), justify='center', width=12, height=1, bg = "#205AA7", fg = "white", borderwidth = 10,  command=self.verified)
         self.loginbutton.place(relx=0.5, rely=0.55, anchor=CENTER)
 
-        self.exitbutton= Button(master, text="Exit", justify='center', width=40, height=5, command=lambda : Exit())
+        self.exitbutton= Button(master, text="Exit", font = ("Helvetica", 30), justify='center', width=12, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda : Exit())
         self.exitbutton.place(relx=0.5, rely=0.7,anchor=CENTER)
 
         self.note=Label(master, text="*Note: If more than 3 unsuccessful login attempts,\n the program will send a notification to you and the program will end!",justify='center', font='Courier 20')
@@ -123,13 +123,13 @@ class ATMmenu:
         self.head.place(relx=0.5, rely=0.07,anchor=CENTER)
         self.head = Label(master, text=" Menu ", justify='center', font='Courier 25', relief="flat")
         self.head.place(relx=0.5, rely=0.15,anchor=CENTER)
-        self.checkbalancebutton= Button(master, text="Check balance", justify='center', width=40, height=5, command=lambda: balanceClicked())
+        self.checkbalancebutton= Button(master, text="Check Balance", font = ("Helvetica", 30), justify='center', width=15, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda: balanceClicked())
         self.checkbalancebutton.place(relx=0.5, rely=0.3,anchor=CENTER)
-        self.Depositbutton= Button(master, text="Deposit", justify='center', width=40, height=5, command=lambda: depositClicked())
+        self.Depositbutton= Button(master, text="Deposit", font = ("Helvetica", 30), justify='center', width=15, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda: depositClicked())
         self.Depositbutton.place(relx=0.5, rely=0.45,anchor=CENTER)
-        self.withdrawbutton= Button(master, text="Withdraw", justify='center', width=40, height=5, command=lambda:  withdrawClicked())
+        self.withdrawbutton= Button(master, text="Withdraw", font = ("Helvetica", 30), justify='center', width=15, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda:  withdrawClicked())
         self.withdrawbutton.place(relx=0.5, rely=0.6,anchor=CENTER)
-        self.exit= Button(master, text="Exit", justify='center', width=40, height=5, command=lambda : Exit())
+        self.exit= Button(master, text="Exit", font = ("Helvetica", 30), justify='center', width=15, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda : Exit())
         self.exit.place(relx=0.5, rely=0.75,anchor=CENTER)
         self.note=Label(master, text="*Note: you can make up to 3 transactions at a time.\n After 3 transactions, the program will send a notification to you and the program will end",justify='center', font='Courier 15')
         self.note.place(relx=0.5, rely=0.9,anchor=CENTER)
@@ -171,7 +171,7 @@ class Balance:
             if (a==username):
                 self.printBalance = Label(master, text="Your account balance is: {}".format(d), justify='center', font='Courier 25')
                 self.printBalance.place(relx=0.5, rely=0.4,anchor=CENTER)
-        self.backbutton= Button(master, text="Go back", justify='center', width=40, height=5, command=lambda: backbuttonClicked())
+        self.backbutton= Button(master, text="Go Back", font = ("Helvetica", 30), justify='center', width=12, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda: backbuttonClicked())
         self.backbutton.place(relx=0.5, rely=0.5,anchor=CENTER)
         account.close()
         def backbuttonClicked():
@@ -202,9 +202,9 @@ class Deposit:
         self.label.place(relx=0.5, rely=0.3,anchor=CENTER)
         self.textlabel= Entry(master)
         self.textlabel.place(relx=0.5, rely=0.4, width=300, height=40, anchor=CENTER)
-        self.checkbutton=Button(master, text="Enter", justify="center", width=40, height=5, command=lambda :checkbutton(self))
+        self.checkbutton=Button(master, text="Enter", font = ("Helvetica", 30), justify='center', width=12, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda :checkbutton(self))
         self.checkbutton.place(relx=0.5, rely=0.55,anchor=CENTER) 
-        self.backbutton= Button(master, text="Go back", justify='center', width=40, height=5, command=lambda : backbuttonClicked(self))
+        self.backbutton= Button(master, text="Go Back", font = ("Helvetica", 30), justify='center', width=12, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda : backbuttonClicked(self))
         self.backbutton.place(relx=0.5, rely=0.70,anchor=CENTER)
 
         #GO BACK TO ATM MENU
@@ -217,16 +217,16 @@ class Deposit:
             count=-1
             
             number=self.textlabel.get()
-            checknumber=number.isdigit()
+            checknumber = number.replace('.','').replace('$','').replace(',','').isdigit()
             accountdata=open("Accounts.txt","r")
             data=accountdata.readlines()
             if (checknumber==True):
                 accountR=open("Accounts.txt","r")   
-                number=int(number)  
+                number=round(float(number.replace('$','').replace(',','')),2) 
                 for i in accountR:
                     count+=1
                     a,b,c,d=i.split(", ")
-                    d=int(d)
+                    d=float(d)
                     if (a==username):
                         #CHECK THE USER ENTERING AMOUNT MATCHES THE CONDITIONS
                         if (number<=0 or number>2000):
@@ -236,7 +236,7 @@ class Deposit:
                         else:
                             #UPDATE NEW DATA TO FILE TXT
                             self.countTrans+=1
-                            number=int(d)+number
+                            number=d+number
                             data[count]="{}, {}, {}, {}\n".format(a,b,c,str(number)) 
                             newdata="".join(data)                           
                             accountW=open("Accounts.txt","w")
@@ -279,9 +279,9 @@ class Withdraw:
         self.label.place(relx=0.5, rely=0.3,anchor=CENTER)
         self.textlabel= Entry(master)
         self.textlabel.place(relx=0.5, rely=0.4, width=300, height=40, anchor=CENTER)
-        self.checkbutton=Button(master, text="Enter", justify="center", width=40, height=5, command=lambda :checkbutton(self))
+        self.checkbutton=Button(master, text="Enter", font = ("Helvetica", 30), justify='center', width=12, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda :checkbutton(self))
         self.checkbutton.place(relx=0.5, rely=0.55,anchor=CENTER) 
-        self.backbutton= Button(master, text="Go back", justify='center', width=40, height=5, command=lambda : backbuttonClicked(self))
+        self.backbutton= Button(master, text="Go Back", font = ("Helvetica", 30), justify='center', width=12, height=1, bg = "#205AA7", fg = "white", borderwidth = 10, command=lambda : backbuttonClicked(self))
         self.backbutton.place(relx=0.5, rely=0.70,anchor=CENTER)
 
         #GO BACK TO ATM MENU
@@ -293,16 +293,16 @@ class Withdraw:
         def checkbutton(self):
             count=-1
             number=self.textlabel.get()
-            checknumber=number.isdigit()
+            checknumber = number.replace('.','').replace('$','').replace(',','').isdigit()
             accountdata=open("Accounts.txt","r")
             data=accountdata.readlines()
             if (checknumber==True):
                 accountR=open("Accounts.txt","r")   
-                number=int(number)  
+                number=round(float(number.replace('$','').replace(',','')),2)  
                 for i in accountR:
                     count+=1
                     a,b,c,d=i.split(", ")
-                    d=int(d)
+                    d=float(d)
                     if (a==username):
                         #CHECK THE USER ENTERING AMOUNT MATCHES THE CONDITIONS
                         if (number<=0 or number>2000):
